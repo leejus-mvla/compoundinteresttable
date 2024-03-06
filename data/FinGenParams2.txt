@@ -1,0 +1,4 @@
+rATe: 0.05
+periods   : 15
+COLUMNS: PF, PA, AP, FA, AF
+Output File: FinTable1.txt

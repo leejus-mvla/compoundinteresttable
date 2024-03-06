@@ -1,0 +1,9 @@
+# the nominal interest rate
+rate: 0.05
+# the number of compounding periods
+periods: 15
+# which compounding factors to show
+# columns: PF, FP, PA, AP, FA AF
+columns: PF, PA, AP, FA, AF
+# the output file name, ignoring starting or ending spaces
+output file: FinTable1.txt
