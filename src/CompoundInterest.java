@@ -74,8 +74,7 @@ public class CompoundInterest {
 	 * @return the P given F
 	 */
 	private double calcPF(double rate, int period) {
-		double finalValue = 0;
-		return finalValue;
+		return 1 / (Math.pow(1 + rate, period));
 	}
 	
 	/**
@@ -97,8 +96,8 @@ public class CompoundInterest {
 	 * @return the present value of n payments
 	 */
 	private double calcPA(double rate, int period) {
-		double finalValue = 0;
-		return finalValue;
+		double finalValue = 1 - calcPF(rate, period);
+		return finalValue / rate;
 	}
 	
 	/**
@@ -120,8 +119,8 @@ public class CompoundInterest {
 	 * @return the future value of n payments
 	 */
 	private double calcFA(double rate, int period) {
-		double finalValue = 0;
-		return finalValue;
+		double finalValue = calcFP(rate, period) - 1;
+		return finalValue / rate;
 	}
 	
 	/**
@@ -133,5 +132,12 @@ public class CompoundInterest {
 	 */
 	private double calcAF(double rate, int period) {
 		return 1 / calcFA(rate, period);
+	}
+	
+	//delete later
+	public String testingCalc(double rate, int period) {
+		return "PF:  " + calcPF(rate, period) + "\nFP:  " + calcFP(rate, period)
+			+ "\nPA:  " + calcPA(rate, period) + "\nAP:  " + calcAP(rate, period)
+			+ "\nFA:  " + calcFA(rate, period) + "\nAF:  " + calcAF(rate, period);
 	}
 }
