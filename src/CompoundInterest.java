@@ -19,6 +19,7 @@ public class CompoundInterest {
 		File of = new File(output);
 		if (inputErrorChecking(input) || outputErrorChecking(output))
 			return;
+		
 	}
 	
 	/**
@@ -63,5 +64,74 @@ public class CompoundInterest {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Calculates present given final.
+	 *
+	 * @param rate the rate
+	 * @param period the period
+	 * @return the P given F
+	 */
+	private double calcPF(double rate, int period) {
+		double finalValue = 0;
+		return finalValue;
+	}
+	
+	/**
+	 * Calculates final given present.
+	 *
+	 * @param rate the rate
+	 * @param period the period
+	 * @return the F given P
+	 */
+	private double calcFP(double rate, int period) {
+		return 1 / calcPF(rate, period);
+	}
+	
+	/**
+	 * Calculates present given annuities.
+	 *
+	 * @param rate the rate
+	 * @param period the period
+	 * @return the present value of n payments
+	 */
+	private double calcPA(double rate, int period) {
+		double finalValue = 0;
+		return finalValue;
+	}
+	
+	/**
+	 * Calculates annuities given present.
+	 *
+	 * @param rate the rate
+	 * @param period the period
+	 * @return the number of payments given present
+	 */
+	private double calcAP(double rate, int period) {
+		return 1 / calcPA(rate, period);
+	}
+	
+	/**
+	 * Calculates annuities given final.
+	 *
+	 * @param rate the rate
+	 * @param period the period
+	 * @return the future value of n payments
+	 */
+	private double calcFA(double rate, int period) {
+		double finalValue = 0;
+		return finalValue;
+	}
+	
+	/**
+	 * Calculates final given annuities.
+	 *
+	 * @param rate the rate
+	 * @param period the period
+	 * @return the number of payments given future value
+	 */
+	private double calcAF(double rate, int period) {
+		return 1 / calcFA(rate, period);
 	}
 }
