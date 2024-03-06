@@ -2,7 +2,6 @@
 RATE: 0.10
 # the number of compounding periods
 PERIODS: 20
-# which compounding factors to show
 COLUMNS: PF, FP, FA, AP
 # the output file name, ignoring starting or ending spaces
 OUTPUT FILE: FinTable_10pct.txt
