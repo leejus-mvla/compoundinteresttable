@@ -66,6 +66,10 @@ public class CompoundInterest {
 		return false;
 	}
 	
+	private String formatNumbers(double num) {
+		return String.format("%.4f", num);
+	}
+	
 	/**
 	 * Calculates present given final.
 	 *
@@ -136,8 +140,8 @@ public class CompoundInterest {
 	
 	//delete later
 	public String testingCalc(double rate, int period) {
-		return "PF:  " + calcPF(rate, period) + "\nFP:  " + calcFP(rate, period)
-			+ "\nPA:  " + calcPA(rate, period) + "\nAP:  " + calcAP(rate, period)
-			+ "\nFA:  " + calcFA(rate, period) + "\nAF:  " + calcAF(rate, period);
+		return "PF:  " + formatNumbers(calcPF(rate, period)) + "\nFP:  " + formatNumbers(calcFP(rate, period))
+			+ "\nPA:  " + formatNumbers(calcPA(rate, period)) + "\nAP:  " + formatNumbers(calcAP(rate, period))
+			+ "\nFA:  " + formatNumbers(calcFA(rate, period)) + "\nAF:  " + formatNumbers(calcAF(rate, period));
 	}
 }
