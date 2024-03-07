@@ -1,25 +1,92 @@
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
 import java.io.BufferedReader;
 
 public class CompoundInterest {
 	
+	/** The MyFileIO, all the file reading and file writing things. */
 	private MyFileIO fio;
 	
+	/** The buffered reader, it reads the input file. */
 	private BufferedReader br;
 	
+	/** The buffered writer, it writes the output file. */
 	private BufferedWriter bw;
 	
+	/** The interest rate. */
+	private double rate;
+	
+	/** The annuities. */
+	private int period;
+	
+	/** The number of columns. */
+	private String[] columns;
+	
+	/** The output file name. */
+	private String ofName;
+	
+	/**
+	 * Instantiates a new compound interest.
+	 */
 	public CompoundInterest() {
 		fio = new MyFileIO();
 	}
 	
-	public void createTable(String input, String output) {
-		File in = new File(input);
-		File of = new File(output);
-		if (inputErrorChecking(input) || outputErrorChecking(output))
+	/**
+	 * The one method that runs all private ones, creates everything.
+	 *
+	 * @param input the input
+	 */
+	public void createTable(String input) {
+		separateData(input);
+		if (inputErrorChecking(input) || outputErrorChecking(ofName))
 			return;
+	}
+	
+	/**
+	 * Separates the useful data from the comments and labels
+	 *
+	 * @param input the input file name
+	 */
+	private void separateData(String input) {
+		String rate = "";
+		String period = "";
+		String[] columns = new String[6];
+		String ofName = "";
+		File in = new File(input);
+		br = fio.openBufferedReader(in);
+		String temp = "";
 		
+		try {
+			while ((temp = br.readLine()) != null) {
+				temp = temp.trim();
+				String original = temp;
+				temp = temp.toLowerCase();
+				if (temp.length() != 0 && temp.charAt(0) == '#')
+					continue;
+				if (temp.replaceAll("(\\w+)\\s*:", "$1:").substring(0, 5).equals("rate:")) {
+					rate = temp.replaceAll("\\w+\\s*:\\s*([\\d+\\.\\d+])", "$1");
+				} else if (temp.replaceAll("(\\w+)\\s*:", "$1:")
+						.substring(0, 8).equals("periods:")) {
+					period = temp.replaceAll("\\w+\\s*:\\s*([\\d+.\\d+])", "$1");
+				} else if (temp.replaceAll("(\\w+)\\s*:", "$1:")
+						.substring(0, 8).equals("columns:")) {
+					temp = temp.replaceAll("\\w+\\s*:\\s*([\\w{2}.])\\s*", "$1");
+					columns = temp.split(",\\s*");
+				} else if (temp.replaceAll("(\\w+)\\s*(\\w+)\\s*:", "$1$2:")
+						.substring(0, 11).equals("outputfile:")) {
+					ofName = original.replaceAll("\\w+\\s*\\w+\\s*:\\s*", "");
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setRate(Double.parseDouble(rate));
+		setPeriod(Integer.parseInt(period));
+		setColumns(columns);
+		setOutputName(ofName);
 	}
 	
 	/**
@@ -136,6 +203,69 @@ public class CompoundInterest {
 	 */
 	private double calcAF(double rate, int period) {
 		return 1 / calcFA(rate, period);
+	}
+	
+	/**
+	 * Sets the rate.
+	 *
+	 * @param rate the new rate
+	 */
+	public void setRate(double rate) {
+		this.rate = rate;
+	}
+	
+	/**
+	 * Gets the rate.
+	 *
+	 * @return the rate
+	 */
+	public double getRate() {
+		return rate;
+	}
+	
+	/**
+	 * Sets the columns.
+	 *
+	 * @param columns the new columns
+	 */
+	public void setColumns(String[] columns) {
+		this.columns = columns;
+	}
+	
+	/**
+	 * Gets the columns.
+	 *
+	 * @return the columns
+	 */
+	public String[] getColumns() {
+		return columns;
+	}
+	
+	/**
+	 * Sets the period.
+	 *
+	 * @param period the new period
+	 */
+	public void setPeriod(int period) {
+		this.period = period;
+	}
+	
+	/**
+	 * Gets the period.
+	 *
+	 * @return the period
+	 */
+	public int getPeriod() {
+		return period;
+	}
+	
+	private void setOutputName(String of) {
+		ofName = of;
+	}
+	
+	//delete
+	public String getOutputName() {
+		return ofName;
 	}
 	
 	//delete later
