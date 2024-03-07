@@ -3,6 +3,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.BufferedReader;
 
+/**
+ * The Class CompoundInterest.
+ */
 public class CompoundInterest {
 	
 	/** The MyFileIO, all the file reading and file writing things. */
@@ -50,12 +53,11 @@ public class CompoundInterest {
 	private void writeFile(String output) {
 		File of = new File(output);
 		bw = fio.openBufferedWriter(of);
-		String line = "       end of period";
-		for (int i = 0; i < columns.length; i++) {
-			line += "        " + columns[i];
-		}
 		try {
-			bw.write(line);
+			bw.write("       end of period");
+			for (int i = 0; i < columns.length; i++) {
+				bw.write("        " + columns[i]);
+			}
 			bw.newLine();
 			for (int i = 0; i < period; i++) {
 				bw.write(writeLine(i + 1));
@@ -63,8 +65,6 @@ public class CompoundInterest {
 			}
 			fio.closeFile(bw);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	
@@ -163,12 +163,18 @@ public class CompoundInterest {
 		return false;
 	}
 	
+	/**
+	 * Formats calculated numbers.
+	 *
+	 * @param num the number
+	 * @return the formatted number
+	 */
 	private String formatNumbers(double num) {
 		return String.format("%.4f", num);
 	}
 	
 	/**
-	 * Groups all calculations in one method
+	 * Groups all calculations in one method.
 	 *
 	 * @param rate the rate
 	 * @param period the period
