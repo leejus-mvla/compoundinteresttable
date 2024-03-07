@@ -313,11 +313,4 @@ public class CompoundInterest {
 	public int getPeriod() {
 		return period;
 	}
-	
-	//delete later
-	public String testingCalc(double rate, int period) {
-		return "PF:  " + formatNumbers(calcPF(rate, period)) + "\nFP:  " + formatNumbers(calcFP(rate, period))
-			+ "\nPA:  " + formatNumbers(calcPA(rate, period)) + "\nAP:  " + formatNumbers(calcAP(rate, period))
-			+ "\nFA:  " + formatNumbers(calcFA(rate, period)) + "\nAF:  " + formatNumbers(calcAF(rate, period));
-	}
 }
