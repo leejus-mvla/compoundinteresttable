@@ -20,13 +20,35 @@ public class MainTesting {
 	
 	public static int period = 15;
 	
+	public static String fName = "data/FinGenParams" + numTest + ".txt";
+	
 	public static void main(String[] args) {
 		ci = new CompoundInterest();
-		f = new File("data/FinGenParams" + numTest + ".txt");
+		f = new File(fName);
 		fio = new MyFileIO();
 		//bw = fio.openBufferedWriter(null);
 		//br = fio.openBufferedReader(null);
-		for (int i = 1; i < period + 1; i++)
-			System.out.println(ci.testingCalc(rate, i) + "\n");
+		
+		//calcuation testing
+		//for (int i = 1; i < period + 1; i++)
+			//System.out.println(ci.testingCalc(rate, i) + "\n");
+		
+		/*
+		String temp = "output file: FinTable1.txt";
+		temp = temp.trim();
+		temp = temp.toLowerCase();
+		System.out.println(temp);
+		temp = "output file: FinTable1.txt";
+		String test = temp.replaceAll("\\w+\\s*\\w+\\s*:\\s*", "");
+		System.out.println(test);
+		*/
+		
+		ci.createTable(fName);
+		System.out.println(ci.getRate());
+		System.out.println(ci.getPeriod());
+		for (String str : ci.getColumns()) {
+			System.out.print(str + " ");
+		}
+		System.out.println("\n" + ci.getOutputName());
 	}
 }
