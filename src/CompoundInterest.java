@@ -23,9 +23,6 @@ public class CompoundInterest {
 	/** The number of columns. */
 	private String[] columns;
 	
-	/** The output file name. */
-	private String ofName;
-	
 	/**
 	 * Instantiates a new compound interest.
 	 */
@@ -38,26 +35,63 @@ public class CompoundInterest {
 	 *
 	 * @param input the input
 	 */
-	public void createTable(String input) {
-		separateData(input);
+	public void createOutputFile(String input) {
+		String ofName = separateData(input);
 		if (inputErrorChecking(input) || outputErrorChecking(ofName))
 			return;
+		writeFile(ofName);
 	}
 	
+	/**
+	 * Writes the output file.
+	 *
+	 * @param output the output file name
+	 */
+	private void writeFile(String output) {
+		File of = new File(output);
+		bw = fio.openBufferedWriter(of);
+		String line = "       end of period";
+		for (int i = 0; i < columns.length; i++) {
+			line += "        " + columns[i];
+		}
+		try {
+			bw.write(line);
+			bw.newLine();
+			for (int i = 0; i < period; i++) {
+				bw.write(writeLine(i + 1));
+				bw.newLine();
+			}
+			fio.closeFile(bw);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Writes the individual line.
+	 *
+	 * @param period the period
+	 * @return the line
+	 */
+	private String writeLine(int period) {
+		String line = String.format("%20d", period);
+		for (int i = 0; i < columns.length; i++) {
+			line += String.format("%10s", formatNumbers(calc(rate, period, columns[i])));
+		}
+		return line;
+	}
+
 	/**
 	 * Separates the useful data from the comments and labels
 	 *
 	 * @param input the input file name
 	 */
-	private void separateData(String input) {
-		String rate = "";
-		String period = "";
-		String[] columns = new String[6];
+	private String separateData(String input) {
 		String ofName = "";
 		File in = new File(input);
 		br = fio.openBufferedReader(in);
 		String temp = "";
-		
 		try {
 			while ((temp = br.readLine()) != null) {
 				temp = temp.trim();
@@ -66,29 +100,26 @@ public class CompoundInterest {
 				if (temp.length() != 0 && temp.charAt(0) == '#')
 					continue;
 				if (temp.replaceAll("(\\w+)\\s*:", "$1:").substring(0, 5).equals("rate:")) {
-					rate = temp.replaceAll("\\w+\\s*:\\s*([\\d+\\.\\d+])", "$1");
+					setRate(Double.parseDouble(temp.replaceAll("\\w+\\s*:\\s*([\\d+\\.\\d+])", "$1")));
 				} else if (temp.replaceAll("(\\w+)\\s*:", "$1:")
 						.substring(0, 8).equals("periods:")) {
-					period = temp.replaceAll("\\w+\\s*:\\s*([\\d+.\\d+])", "$1");
+					setPeriod(Integer.parseInt(temp.replaceAll("\\w+\\s*:\\s*([\\d+.\\d+])", "$1")));
 				} else if (temp.replaceAll("(\\w+)\\s*:", "$1:")
 						.substring(0, 8).equals("columns:")) {
 					temp = temp.replaceAll("\\w+\\s*:\\s*([\\w{2}.])\\s*", "$1");
-					columns = temp.split(",\\s*");
+					temp = temp.toUpperCase();
+					setColumns(temp.split(",\\s*"));
 				} else if (temp.replaceAll("(\\w+)\\s*(\\w+)\\s*:", "$1$2:")
 						.substring(0, 11).equals("outputfile:")) {
 					ofName = original.replaceAll("\\w+\\s*\\w+\\s*:\\s*", "");
 				}
 			}
+			fio.closeFile(br);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		setRate(Double.parseDouble(rate));
-		setPeriod(Integer.parseInt(period));
-		setColumns(columns);
-		setOutputName(ofName);
+		return "output/" + ofName;
 	}
-	
+		
 	/**
 	 * Error checking for the input file.
 	 *
@@ -135,6 +166,31 @@ public class CompoundInterest {
 	
 	private String formatNumbers(double num) {
 		return String.format("%.4f", num);
+	}
+	
+	/**
+	 * Groups all calculations in one method
+	 *
+	 * @param rate the rate
+	 * @param period the period
+	 * @param formula the formula
+	 * @return the final value
+	 */
+	private double calc(double rate, int period, String formula) {
+		if (formula.equals("PF")) {
+			return calcPF(rate, period);
+		} else if (formula.equals("FP")) {
+			return calcFP(rate, period);
+		} else if (formula.equals("PA")) {
+			return calcPA(rate, period);
+		} else if (formula.equals("AP")) {
+			return calcAP(rate, period);
+		} else if (formula.equals("FA")) {
+			return calcFA(rate, period);
+		} else if (formula.equals("AF")) {
+			return calcAF(rate, period);
+		}
+		return 0;
 	}
 	
 	/**
@@ -257,15 +313,6 @@ public class CompoundInterest {
 	 */
 	public int getPeriod() {
 		return period;
-	}
-	
-	private void setOutputName(String of) {
-		ofName = of;
-	}
-	
-	//delete
-	public String getOutputName() {
-		return ofName;
 	}
 	
 	//delete later
