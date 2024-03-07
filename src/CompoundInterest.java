@@ -81,11 +81,12 @@ public class CompoundInterest {
 		}
 		return line;
 	}
-
+	
 	/**
-	 * Separates the useful data from the comments and labels
+	 * Separates the useful data from the comments and lavels
 	 *
-	 * @param input the input file name
+	 * @param input the input
+	 * @return the output file name
 	 */
 	private String separateData(String input) {
 		String ofName = "";
