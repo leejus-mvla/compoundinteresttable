@@ -110,9 +110,8 @@ public class CompoundInterest {
 					temp = temp.toUpperCase();
 					setColumns(temp.split(",\\s*"));
 				} else if (temp.replaceAll("(\\w+)\\s*(\\w+)\\s*:", "$1$2:")
-						.substring(0, 11).equals("outputfile:")) {
+						.substring(0, 11).equals("outputfile:"))
 					ofName = original.replaceAll("\\w+\\s*\\w+\\s*:\\s*", "");
-				}
 			}
 			fio.closeFile(br);
 		} catch (IOException e) {
