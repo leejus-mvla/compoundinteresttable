@@ -43,12 +43,16 @@ public class MainTesting {
 		System.out.println(test);
 		*/
 		
-		ci.createTable(fName);
+		ci.createOutputFile(fName);
+		/*
 		System.out.println(ci.getRate());
 		System.out.println(ci.getPeriod());
-		for (String str : ci.getColumns()) {
-			System.out.print(str + " ");
+		String[] columns = ci.getColumns();
+		String line = "       end of period";
+		for (int i = 0; i < columns.length; i++) {
+			line += "        " + columns[i];
 		}
-		System.out.println("\n" + ci.getOutputName());
+		System.out.println(line);
+		*/
 	}
 }
